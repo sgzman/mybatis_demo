@@ -38,4 +38,11 @@ public interface UserMapper {
 	 * @return
 	 */
 	int insert2(SysUser sysUser);
+	
+	/**
+	 * 新增用户-使用selectKey方式
+	 * @param sysUser
+	 * @return
+	 */
+	int insert3(SysUser sysUser);
 }

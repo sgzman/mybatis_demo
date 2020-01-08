@@ -62,4 +62,20 @@
 			#{headImg,jdbcType=BLOB},#{createTime,jdbcType=TIMESTAMP}
 		)
 	</insert>
+	
+	<!-- selectKey标签的keyColumn、keyProperty和上面userGeneratedKeys的用法含义相同，
+	这里的resultType用于设置返回值类型。order属性的设置和使用的数据库有关，MySql中为AFTER,
+	因为当前记录的主键值在insert语句执行成功后才能获取到，Oracle的为BEFORE，这是因为Oracle中需要先从序列获取值，
+	然后将值作为主键插入到数据库中-->
+	<insert id="insert3">
+		insert into sys_user(
+			user_name,user_password,user_email,user_info,head_img,create_time
+		)values(
+			#{userName},#{userPassword},#{userEmail},#{userInfo},
+			#{headImg,jdbcType=BLOB},#{createTime,jdbcType=TIMESTAMP}
+		)
+		<selectKey keyColumn="id" resultType="long" keyProperty="id" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
 </mapper>
