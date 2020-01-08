@@ -12,7 +12,9 @@ public class SysRole {
 	
 	private Long createBy;
 	
-	private Date dateTime;
+	private Date createTime;
+	
+	private SysUser user;
 
 	public Long getId() {
 		return id;
@@ -46,11 +48,19 @@ public class SysRole {
 		this.createBy = createBy;
 	}
 
-	public Date getDateTime() {
-		return dateTime;
+	public Date getCreateTime() {
+		return createTime;
 	}
 
-	public void setDateTime(Date dateTime) {
-		this.dateTime = dateTime;
+	public void setCreateTime(Date dateTime) {
+		this.createTime = dateTime;
+	}
+
+	public SysUser getUser() {
+		return user;
+	}
+
+	public void setUser(SysUser user) {
+		this.user = user;
 	}
 }
