@@ -51,4 +51,15 @@
 			#{headImg,jdbcType=BLOB},#{createTime,jdbcType=TIMESTAMP}
 		)
 	</insert>
+	
+	<!-- useGeneratedKeys设置为true后，MyBatis会使用JDBC的getGeneratedKeys方法来取出由数据库内部生成的主键
+	。获得主键后会将其赋值给keyProperty配置的id属性 -->
+	<insert id="insert2" useGeneratedKeys="true" keyProperty="id">
+		insert into sys_user(
+			user_name,user_password,user_email,user_info,head_img,create_time
+		)values(
+			#{userName},#{userPassword},#{userEmail},#{userInfo},
+			#{headImg,jdbcType=BLOB},#{createTime,jdbcType=TIMESTAMP}
+		)
+	</insert>
 </mapper>

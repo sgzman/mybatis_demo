@@ -92,4 +92,30 @@ public class UserMapperTest extends BaseMapperTest{
 			sqlSession.close();
 		}
 	}
+	
+	@Test
+	public void testInsert2() {
+		SqlSession sqlSession=getSqlSession();
+		try {
+			UserMapper userMapper=sqlSession.getMapper(UserMapper.class);
+			SysUser user=new SysUser();
+			user.setUserName("teset1");
+			user.setUserPassword("123456");
+			user.setUserEmail("test@mybatis.tk");
+			user.setUserInfo("test info");
+			user.setHeadImg(new byte[] {1,2,3});
+			user.setCreateTime(new Date());
+			int result=userMapper.insert2(user);
+			//只插入一条数据
+			Assert.assertEquals(1, result);
+			//id回写，所以id不为null
+			Assert.assertNotNull(user.getId());
+		}finally {
+			sqlSession.rollback();
+			//不要忘记关闭sqlSession
+			sqlSession.close();
+		}
+
+		
+	}
 }
