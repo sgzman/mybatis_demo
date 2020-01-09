@@ -1,5 +1,6 @@
 package tk.mybatis.simple.mapper;
 
+import java.lang.reflect.Proxy;
 import java.util.Date;
 import java.util.List;
 
@@ -7,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.junit.Assert;
 import org.junit.Test;
 
+import tk.mybatis.simple.MyMapperProxy;
 import tk.mybatis.simple.model.SysRole;
 import tk.mybatis.simple.model.SysUser;
 
@@ -209,8 +211,19 @@ public class UserMapperTest extends BaseMapperTest{
 			//角色数量大于0个
 			Assert.assertTrue(roleList.size()>0);
 		}finally {
-			//切莫关闭sqlSession哦S
+			//切莫关闭sqlSession哦
 			sqlSession.close();
 		}
+	}
+	
+	@Test
+	public void testMyMapperProxy() {
+		SqlSession sqlSession=getSqlSession();
+		//获取UserMapper接口
+		MyMapperProxy<?> userMapperProxy=new MyMapperProxy<>(UserMapper.class,sqlSession);
+		UserMapper userMapper=(UserMapper) Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(), new Class[]{UserMapper.class},
+				userMapperProxy);
+		//调用selectAll方法
+		List<SysUser> userList=userMapper.selectAll();
 	}
 }
