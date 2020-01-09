@@ -78,4 +78,15 @@
 			SELECT LAST_INSERT_ID()
 		</selectKey>
 	</insert>
+	
+	<update id="updateById">
+		update sys_user
+		set user_name=#{userName},
+			user_password=#{userPassword},
+			user_email=#{userMail},
+			user_info=#{userInfo},
+			user_img=#{headImg,jdbcType=BLOB},
+			create_time=#{createTimejdbcType=ITEMSTAMP}
+		where id=#{id}
+	</update>
 </mapper>

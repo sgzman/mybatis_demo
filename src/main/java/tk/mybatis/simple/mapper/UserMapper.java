@@ -45,4 +45,11 @@ public interface UserMapper {
 	 * @return
 	 */
 	int insert3(SysUser sysUser);
+	
+	/**
+	 * 根据主键更新
+	 * @param sysUser
+	 * @return
+	 */
+	int updateById(SysUser sysUser);
 }

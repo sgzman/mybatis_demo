@@ -19,7 +19,7 @@ public class UserMapperTest extends BaseMapperTest{
 			//获取UserMapper接口
 			UserMapper userMapper= sqlSession.getMapper(UserMapper.class);
 			//调用selectById方法，查询id=1的用户
-			SysUser user=userMapper.selectById((long) 11);
+			SysUser user=userMapper.selectById(1l);
 			//user不为空
 			Assert.assertNotNull(user);
 			//userName=admin
@@ -115,7 +115,35 @@ public class UserMapperTest extends BaseMapperTest{
 			//不要忘记关闭sqlSession
 			sqlSession.close();
 		}
+	}
+	
+	@Test
+	public void testUpdateById() {
+		SqlSession sqlSession=getSqlSession();
+		try {
+			UserMapper userMapper=sqlSession.getMapper(UserMapper.class);
+			//从当前数据库查询1个对象
+			SysUser sysUser=userMapper.selectById(1L);
+			//当前userName为admin
+			Assert.assertEquals("admin", sysUser.getUserName());
+			//修改用户名
+			sysUser.setUserName("admin-test");
+			//修改邮箱
+			sysUser.setUserEmail("test@mybatis.com");
+			//执行更新
+			int result= userMapper.updateById(sysUser);
+			//只更新一条数据
+			Assert.assertEquals(1, result);
+			//修改后的名字是“admin_test”
+			Assert.assertEquals("admin_test", sysUser.getUserName());
+		}finally{
+			//为了不影响其他测试，这里选择回滚
+			//由于默认的sqlSessionFactory.openSession()是不自动提交的，
+			//因此不手动执行commit也不会提交到数据库
+			sqlSession.rollback();
+			//不要忘记关闭sqlSession
+			sqlSession.close() ; 
 
-		
+		}
 	}
 }
