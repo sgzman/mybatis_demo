@@ -89,4 +89,8 @@
 			create_time=#{createTimejdbcType=ITEMSTAMP}
 		where id=#{id}
 	</update>
+	
+	<delete id="deleteById">
+		delete form sys_user where id=#{id}
+	</delete>
 </mapper>

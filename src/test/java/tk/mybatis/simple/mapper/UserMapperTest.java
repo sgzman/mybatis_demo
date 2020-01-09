@@ -146,4 +146,35 @@ public class UserMapperTest extends BaseMapperTest{
 
 		}
 	}
+	
+	@Test
+	public void testDeleteById() {
+		SqlSession sqlSession=getSqlSession();
+		try {
+			UserMapper userMapper = sqlSession . getMapper(UserMapper.class); 
+			//从数据库查询1个user对象，根据id=1 查询
+			SysUser userl = userMapper.selectById(1L); 
+			//现在还能查询出user对象
+			Assert.assertNotNull(userl);
+			//调用方法删除
+			Assert.assertEquals(1,userMapper.deleteById(1L)); 
+			//再次查询，这时应该没有值，为null
+			Assert.assertNull(userMapper.selectById(1L)); 
+			//使用SysUser参数再进行一次测试，根据id = 1001查询
+			SysUser user2 = userMapper.selectById(1001L); 
+			//现在还能查询出user对象
+			Assert.assertNotNull(user2); 
+			//调用方法删除，注意这里使用参数为user2
+			Assert.assertEquals(1,userMapper.deleteById(user2)); 
+			Assert.assertNull(userMapper.selectById(1001L)); 
+			//使用SysUser参数再进行一次测试
+			}finally { 
+			//为了不影响其他测试，这里选择回滚
+			//由于默认的sqlSessionFactory.openSession()是不自动提交的，
+			//因此不手动执行commit也不会提交到数据库
+			sqlSession.rollback(); 
+			//不要忘记关闭sqlSession
+			sqlSession.close(); 
+		}
+	}
 }

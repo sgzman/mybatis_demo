@@ -52,4 +52,12 @@ public interface UserMapper {
 	 * @return
 	 */
 	int updateById(SysUser sysUser);
+	
+	/**
+	 * 通过主键删除  如果将参数类型修改成SysUser sysUser也可以的
+	 * @param id
+	 * @return
+	 */
+	int deleteById(Long id);
+	int deleteById(SysUser sysUser);
 }
