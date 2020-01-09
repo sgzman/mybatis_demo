@@ -2,6 +2,8 @@ package tk.mybatis.simple.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import tk.mybatis.simple.model.SysRole;
 import tk.mybatis.simple.model.SysUser;
 
@@ -60,4 +62,20 @@ public interface UserMapper {
 	 */
 	int deleteById(Long id);
 	int deleteById(SysUser sysUser);
+	
+	/**
+	 * 根据用户的id和角色的enabled状态获取用户的角色
+	 * @param id
+	 * @param enabled
+	 * @return
+	 */
+	List<SysRole> selectRolesByUserIdAndRoleEnabled(@Param("userId")Long userId,@Param("enabled")Integer enabled);
+	
+	/**
+	 * 同上：根据用户的id和角色的enabled状态获取用户的角色
+	 * @param sysUser
+	 * @param sysRole
+	 * @return
+	 */
+	List<SysRole> selectRolesByUserAndRole(@Param("user")SysUser sysUser,@Param("role")SysRole sysRole);
 }
