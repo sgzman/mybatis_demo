@@ -85,4 +85,11 @@ public interface UserMapper {
 	 * @return
 	 */
 	List<SysUser> selectByUser(SysUser sysUser);
+	
+	/**
+	 * 根据主键更新
+	 * @param sysUser
+	 * @return
+	 */
+	int updateByIdSelective(SysUser sysUser);
 }
