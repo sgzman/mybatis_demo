@@ -226,4 +226,30 @@ public class UserMapperTest extends BaseMapperTest{
 		//调用selectAll方法
 		List<SysUser> userList=userMapper.selectAll();
 	}
+	
+	@Test
+	public void testSelectByUser() {
+		SqlSession sqlSession=getSqlSession();
+		try {
+			UserMapper userMapper=sqlSession.getMapper(UserMapper.class);
+			//只查询用户名时候
+			SysUser query=new SysUser();
+			query.setUserName("ad");
+			List<SysUser> userList=userMapper.selectByUser(query);
+			Assert.assertTrue(userList.size()>0);
+			//只查询用户邮箱的时候
+			query=new SysUser();
+			query.setUserEmail("test@mybatis.com");
+			userList=userMapper.selectByUser(query);
+			Assert.assertTrue(userList.size()>0);
+			//当同时查询用户名和邮箱的时候
+			query.setUserName("ad");
+			query.setUserEmail("test@mybatis.com");
+			userList=userMapper.selectByUser(query);
+			//由于没有同时符合这两个条件的用户，因此查询结果数为0
+			Assert.assertTrue(userList.size()==0);
+		}finally {
+			sqlSession.close();
+		}
+	}
 }
