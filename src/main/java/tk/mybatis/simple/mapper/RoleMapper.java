@@ -2,10 +2,13 @@ package tk.mybatis.simple.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectKey;
 
 import tk.mybatis.simple.model.SysRole;
 
@@ -27,4 +30,25 @@ public interface RoleMapper {
 	@ResultMap("roleResultMap")
 	@Select("select * from sys_role")
 	List<SysRole> selectAll();
+	
+	@Insert({"insert into sys_role(role_name,enabled,create_by,create_time)",
+		"values(#{roleName},#{enabled},#{createBy},",
+		"#{createTime,jdbcType=TIMESTAMP})"})
+	int insert(SysRole sysRole);
+	
+	//和上面的insert方法相比，insert2方法中的SQL中少了一列，注解多了一个@Options
+	//我们在这个注解中设置了useGeneratedKeys和keyProperty属性，用法XML相同，当需要配置多个列时
+	//这个注解也提供了keyColumn属性，可以像XML中那样配置使用
+	@Insert({"insert into sys_role(role_name,enabled,create_by,create_time)",
+		"values(#{roleName},#{enabled},#{createBy},",
+		"#{createTime,jdbcType=TIMESTAMP})"})
+	@Options(useGeneratedKeys=true,keyProperty="id")
+	int insert2(SysRole sysRole);
+	
+	//和之前在UserMapper中对应的xml中的文件类似，before=false功能等同于order="AFTER"
+	@Insert({"insert into sys_role(role_name,enabled,create_by,create_time)",
+		"values(#{roleName},#{enabled},#{createBy},",
+		"#{createTime,jdbcType=TIMESTAMP})"})
+	@SelectKey(statement="SELECT LAST_INSERT_ID()",keyProperty="id",resultType=Long.class,before=false)
+	int insert3(SysRole sysRole);
 }
