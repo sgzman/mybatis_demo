@@ -56,10 +56,17 @@
 	。获得主键后会将其赋值给keyProperty配置的id属性 -->
 	<insert id="insert2" useGeneratedKeys="true" keyProperty="id">
 		insert into sys_user(
-			user_name,user_password,user_email,user_info,head_img,create_time
+			user_name,user_password,
+			<if test="userEmail!=null and userEmail!=''">
+				user_eamil,
+			</if>
+			user_info,head_img,create_time
 		)values(
-			#{userName},#{userPassword},#{userEmail},#{userInfo},
-			#{headImg,jdbcType=BLOB},#{createTime,jdbcType=TIMESTAMP}
+			#{userName},#{userPassword},
+			<if test="userEmail!=null and userEmail !=''">
+				#{userEmail}
+			</if>
+			#{userInfo},#{headImg,jdbcType=BLOB},#{createTime,jdbcType=TIMESTAMP}
 		)
 	</insert>
 	
