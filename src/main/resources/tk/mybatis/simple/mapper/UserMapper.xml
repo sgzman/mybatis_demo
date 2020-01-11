@@ -195,4 +195,21 @@
 			</otherwise>
 		</choose>
 	</select>
+	
+	<!-- foreach中各个参数的用法请参考书籍中4.4章节 -->
+	<select id="selectByIdList" resultType="tk.mybatis.simple.model.SysUser">
+		select id,
+			user_name,
+			user_password,
+			user_email,
+			user_info,
+			head_img,
+			create_time
+		from sys_user
+		where id in
+    	<foreach collection="list" open="(" close=")" separator="," item="id" index="i">
+    		#{id}
+    	</foreach>
+	</select>
+	
 </mapper>

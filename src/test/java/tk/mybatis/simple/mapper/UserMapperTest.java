@@ -1,6 +1,7 @@
 package tk.mybatis.simple.mapper;
 
 import java.lang.reflect.Proxy;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -316,6 +317,22 @@ public class UserMapperTest extends BaseMapperTest{
 			query.setUserName(null);
 			sysUser=userMapper.selectByIdOrUserName(query);
 			Assert.assertNull(sysUser);
+		}finally {
+			sqlSession.close();
+		}
+	}
+	
+	@Test
+	public void testSelectByIdList() {
+		SqlSession sqlSession=getSqlSession();
+		try {
+			UserMapper userMapper=sqlSession.getMapper(UserMapper.class);
+			List<Long> idList=new ArrayList<Long>();
+			idList.add(1L);
+			idList.add(1001L);
+			//业务逻辑中必须校验idList.size()>0
+			List<SysUser> userList=userMapper.selectByIdList(idList);
+			Assert.assertEquals(2, userList.size());
 		}finally {
 			sqlSession.close();
 		}
