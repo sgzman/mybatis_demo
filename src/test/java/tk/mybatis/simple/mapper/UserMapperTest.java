@@ -296,4 +296,28 @@ public class UserMapperTest extends BaseMapperTest{
 			sqlSession.close();
 		}
 	}
+	
+	@Test
+	public void testSelectByIdOrUserName() {
+		SqlSession sqlSession=getSqlSession();
+		try {
+			UserMapper userMapper=sqlSession.getMapper(UserMapper.class);
+			//只查询用户名的时候
+			SysUser query=new SysUser();
+			query.setId(1L);
+			query.setUserName("admin");
+			SysUser sysUser=userMapper.selectByIdOrUserName(query);
+			Assert.assertNotNull(sysUser);
+			//当没有id的时候
+			query.setId(null);
+			sysUser=userMapper.selectByIdOrUserName(query);
+			Assert.assertNotNull(sysUser);
+			//当id和name都为空的时候
+			query.setUserName(null);
+			sysUser=userMapper.selectByIdOrUserName(query);
+			Assert.assertNull(sysUser);
+		}finally {
+			sqlSession.close();
+		}
+	}
 }

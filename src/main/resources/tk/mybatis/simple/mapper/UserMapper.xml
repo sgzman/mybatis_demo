@@ -171,4 +171,27 @@
 		</set>
 		where id = #{id}
 	</update>
+	
+	<select id="selectByIdOrUserName" resultType="tk.mybatis.simple.model.SysUser">
+		select id,
+			user_name,
+			user_email,
+			user_info,
+			user_password,
+			head_img,
+			create_time
+		from sys_user
+		where 1=1
+		<choose>
+			<when test="id!=null">
+				and id=#{id}
+			</when>
+			<when test="userName!=null and userName!=''">
+				and user_name=#{userName}
+			</when>
+			<otherwise>
+				and 1=2
+			</otherwise>
+		</choose>
+	</select>
 </mapper>

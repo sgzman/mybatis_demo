@@ -92,4 +92,11 @@ public interface UserMapper {
 	 * @return
 	 */
 	int updateByIdSelective(SysUser sysUser);
+	
+	/**
+	 * 根据用户id或者用户名称查询
+	 * @param sysUser
+	 * @return
+	 */
+	SysUser selectByIdOrUserName(SysUser sysUser);
 }
