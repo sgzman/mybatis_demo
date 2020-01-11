@@ -337,4 +337,31 @@ public class UserMapperTest extends BaseMapperTest{
 			sqlSession.close();
 		}
 	}
+	
+	@Test
+	public void teStinsertList() {
+		SqlSession sqlSession=getSqlSession();
+		try {
+			UserMapper userMapper=sqlSession.getMapper(UserMapper.class);
+			//创建一个userList对象
+			List<SysUser> userList=new ArrayList<SysUser>();
+			for(int i=0;i<2;i++) {
+				SysUser sysUser=new SysUser();
+				sysUser.setUserName("test"+i);
+				sysUser.setUserPassword("123456");
+				sysUser.setUserEmail("test@mybatis.com");
+				userList.add(sysUser);
+			}
+			//将新建立的对象批量插入到数据库中
+			//特别注意  这里返回的值result是执行SQL影响的行数】
+			int result=userMapper.insertList(userList);
+			//插入两行数据
+			Assert.assertEquals(2, result);
+		}finally {
+			//为了不影响其他测试，这里选择回滚
+			sqlSession.rollback();
+			//最后关闭连接
+			sqlSession.close();
+		}
+	}
 }
