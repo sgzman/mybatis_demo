@@ -3,7 +3,9 @@ package tk.mybatis.simple.mapper;
 import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Assert;
@@ -361,6 +363,28 @@ public class UserMapperTest extends BaseMapperTest{
 			//为了不影响其他测试，这里选择回滚
 			sqlSession.rollback();
 			//最后关闭连接
+			sqlSession.close();
+		}
+	}
+	
+	@Test
+	public void testUpdateByMap() {
+		SqlSession sqlSession=getSqlSession();
+		try {
+			UserMapper userMapper=sqlSession.getMapper(UserMapper.class);
+			Map<String,Object> map=new HashMap<String,Object>();
+			//查询条件，同样也是更细字段，必须保证改值寻在
+			map.put("id", 1L);
+			//要更新的其它字段
+			map.put("user_email","test@mybatis.com");
+			map.put("user_password", "123456");
+			//更新数据
+			userMapper.updateByMap(map);
+			//根据当前id查询修改后的数据
+			SysUser sysUser=userMapper.selectById(1L);
+			Assert.assertEquals("test@mybatis.com", sysUser.getUserEmail());
+		}finally {
+			sqlSession.rollback();
 			sqlSession.close();
 		}
 	}
