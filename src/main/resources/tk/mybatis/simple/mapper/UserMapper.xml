@@ -15,15 +15,17 @@
 		<result property="sysRole.roleName" column="role_name"/>
 		<result property="sysRole.enabled" column="enabled"/>
 		<result property="sysRole.createBy" column="create_by"/>
-		<result property="role.createTime" column="role_create_time" jdbcType="TIMESTAMP"/> -->
+		<result property="sysRole.createTime" column="role_create_time" jdbcType="TIMESTAMP"/> -->
 	</resultMap>
 	<!-- 继承userMap -->
 	<resultMap type="tk.mybatis.simple.model.SysUser" id="userRoleMap" extends="userMap">
-		<result property="sysRole.id" column="role_id"/>
-		<result property="sysRole.roleName" column="role_name"/>
-		<result property="sysRole.enabled" column="enabled"/>
-		<result property="sysRole.createBy" column="create_by"/>
-		<result property="role.createTime" column="role_create_time" jdbcType="TIMESTAMP"/>
+		<association property="sysRole" columnPrefix="sysRole_" javaType="tk.mybatis.simple.model.SysRole">
+			<result property="id" column="role_id"/>
+			<result property="roleName" column="role_name"/>
+			<result property="enabled" column="enabled"/>
+			<result property="createBy" column="create_by"/>
+			<result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+		</association>
 	</resultMap>
 	
 	<select id="selectById" resultMap="userMap">
