@@ -13,7 +13,14 @@ public class SysUser {
 	
 	private String userInfo;
 	
+	private Date createTime;
+	
 	private byte[] headImg;
+	
+	/**
+	 * 用户角色
+	 */
+	private SysRole sysRole;
 	
 	public Long getId() {
 		return id;
@@ -71,5 +78,12 @@ public class SysUser {
 		this.createTime = createTime;
 	}
 
-	private Date createTime;
+	public SysRole getRole() {
+		return sysRole;
+	}
+	
+	public void setRole(SysRole sysRole) {
+		this.sysRole=sysRole;
+	}
+	
 }
