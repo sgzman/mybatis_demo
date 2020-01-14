@@ -1,6 +1,7 @@
 package tk.mybatis.simple.model;
 
 import java.util.Date;
+import java.util.List;
 
 public class SysUser {
 	private Long id;
@@ -18,9 +19,9 @@ public class SysUser {
 	private byte[] headImg;
 	
 	/**
-	 * 用户角色
+	 * 用户角色集合
 	 */
-	private SysRole sysRole;
+	private List<SysRole> roleList;
 	
 	public Long getId() {
 		return id;
@@ -78,12 +79,12 @@ public class SysUser {
 		this.createTime = createTime;
 	}
 
-	public SysRole getRole() {
-		return sysRole;
+	public List<SysRole> getRoleList() {
+		return roleList;
 	}
 	
-	public void setRole(SysRole sysRole) {
-		this.sysRole=sysRole;
+	public void setRole(List<SysRole> roleList) {
+		this.roleList=roleList;
 	}
 	
 }

@@ -400,7 +400,7 @@ public class UserMapperTest extends BaseMapperTest{
 			//user不为空
 			Assert.assertNotNull(user);
 			//user.sysUser也不为空
-			Assert.assertNotNull(user.getRole());
+//			Assert.assertNotNull(user.getRole());
 		}finally {
 			sqlSession.close();
 		}
@@ -417,7 +417,25 @@ public class UserMapperTest extends BaseMapperTest{
 			//user不为空
 			Assert.assertNotNull(user);
 			//user.sysUser也不为空
-			Assert.assertNotNull(user.getRole());
+//			Assert.assertNotNull(user.getRole());
+		}finally {
+			sqlSession.close();
+		}
+	}
+	
+	@Test
+	public void testSelectAllUserAndRoles() {
+		SqlSession sqlSession=getSqlSession();
+		try {
+			UserMapper userMapper=sqlSession.getMapper(UserMapper.class);
+			List<SysUser> userList=userMapper.selectAllUserAndRoles();
+			System.out.println("用户数："+userList.size());
+			for(SysUser user:userList) {
+				System.out.println("用户名："+user.getUserName());
+				for(SysRole role:user.getRoleList()) {
+					System.out.println("角色名："+role.getRoleName());
+				}
+			}
 		}finally {
 			sqlSession.close();
 		}
