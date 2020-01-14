@@ -12,6 +12,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import tk.mybatis.simple.MyMapperProxy;
+import tk.mybatis.simple.model.SysPrivilege;
 import tk.mybatis.simple.model.SysRole;
 import tk.mybatis.simple.model.SysUser;
 
@@ -434,6 +435,9 @@ public class UserMapperTest extends BaseMapperTest{
 				System.out.println("用户名："+user.getUserName());
 				for(SysRole role:user.getRoleList()) {
 					System.out.println("角色名："+role.getRoleName());
+					for(SysPrivilege privilege:role.getPrivilegeList()) {
+						System.out.println("权限名："+privilege.getPrivilegeName());
+					}
 				}
 			}
 		}finally {

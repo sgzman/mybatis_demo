@@ -1,6 +1,7 @@
 package tk.mybatis.simple.model;
 
 import java.util.Date;
+import java.util.List;
 
 public class SysRole {
 
@@ -15,6 +16,13 @@ public class SysRole {
 	private Date createTime;
 	
 	private SysUser user;
+	
+	private CreateInfo createInfo;
+
+	/**
+	 * 角色包含的权限列表
+	 */
+	List<SysPrivilege> privilegeList;
 
 	public Long getId() {
 		return id;
@@ -62,5 +70,21 @@ public class SysRole {
 
 	public void setUser(SysUser user) {
 		this.user = user;
+	}
+	
+	public List<SysPrivilege> getPrivilegeList(){
+		return privilegeList;
+	}
+	
+	public void setPrivilegeList(List<SysPrivilege> privilegeList) {
+		this.privilegeList=privilegeList;
+	}
+	
+	public CreateInfo getCreateInfo() {
+		return createInfo;
+	}
+
+	public void setCreateInfo(CreateInfo createInfo) {
+		this.createInfo = createInfo;
 	}
 }
