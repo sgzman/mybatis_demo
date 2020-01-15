@@ -65,5 +65,12 @@ public interface RoleMapper {
 	 * @param id
 	 * @return
 	 */
-	List<SysRole> selectRoleByUserID(Long id);
+	List<SysRole> selectRoleByUserId(Long id);
+	
+	/**
+	 * 根据用户ID获取用户的角色信息
+	 * @param id
+	 * @return
+	 */
+	List<SysRole> selectRoleByUserIdChoose(Long id);
 }

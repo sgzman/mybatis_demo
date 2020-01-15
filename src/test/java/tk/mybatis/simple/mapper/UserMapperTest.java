@@ -462,4 +462,34 @@ public class UserMapperTest extends BaseMapperTest{
 			sqlSession.close();
 		}
 	}
+	
+	@Test
+	public void testSelectRoleByUserIdChoose() {
+		SqlSession sqlSession=getSqlSession();
+		try {
+			RoleMapper roleMapper=sqlSession.getMapper(RoleMapper.class);
+			//由于数据库enabled都是1，所以给其中一个角色的enabled赋值未0
+			SysRole role=roleMapper.selectById(2L);
+			role.setEnabled(0);
+			roleMapper.updateById(role);
+			//获取用户1的角色
+			List<SysRole> roleList=roleMapper.selectRoleByUserIdChoose(1L);
+			for(SysRole r:roleList) {
+				System.out.println("角色名："+r.getRoleName());
+				if(r.getId().equals(1L)) {
+					//第一个角色存在角色权限
+					Assert.assertNotNull(r.getPrivilegeList());
+				}else if(r.getId().equals(2L)) {
+					//第二个角色的权限为null
+					Assert.assertNull(r.getPrivilegeList());
+					continue;
+				}
+				for(SysPrivilege privilege:r.getPrivilegeList()) {
+					System.out.println("权限名："+privilege.getPrivilegeName());
+				}
+			}
+		}finally {
+			sqlSession.close();
+		}
+	}
 }
