@@ -6,7 +6,7 @@ public class SysPrivilege {
 	
 	private String privilegeName;
 	
-	private String privilegeURL;
+	private String privilegeUrl;
 
 	public Long getId() {
 		return id;
@@ -24,11 +24,11 @@ public class SysPrivilege {
 		this.privilegeName = privilegeName;
 	}
 
-	public String getPrivilegeURL() {
-		return privilegeURL;
+	public String getPrivilegeUrl() {
+		return privilegeUrl;
 	}
 
-	public void setPrivilegeURL(String privilegeURL) {
-		this.privilegeURL = privilegeURL;
+	public void setPrivilegeUrl(String privilegeUrl) {
+		this.privilegeUrl = privilegeUrl;
 	}
 }

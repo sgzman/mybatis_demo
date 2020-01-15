@@ -59,4 +59,11 @@ public interface RoleMapper {
 	
 	@Delete({"delte from sys_role where id=#{id}"})
 	int deleteById(SysRole sysRole);
+	
+	/**
+	 * 根据用户ID获取用户的角色信息
+	 * @param id
+	 * @return
+	 */
+	List<SysRole> selectRoleByUserID(Long id);
 }
